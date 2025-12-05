@@ -199,7 +199,7 @@ If you use this repository or figures in your research:
 **Dmitry Vasilevich Klimov (2025).
 *Psi–Continuum Cosmology v2: A Minimal One–Parameter Extension of ΛCDM.***
 
-Zenodo. https://doi.org/XXX
+Zenodo. https://doi.org/...
 
 ---
 
