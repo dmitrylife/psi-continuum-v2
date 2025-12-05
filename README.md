@@ -47,6 +47,7 @@ This indicates ΨCDM fits current background-expansion data slightly better, whi
 
 ## Repository Structure
 
+```
 psi-continuum-v2/
 ├── analysis/
 │   ├── check_models.py
@@ -93,6 +94,7 @@ psi-continuum-v2/
 ├── run_all.py
 ├── requirements.txt
 └── README.md
+```
 
 ---
 
@@ -100,25 +102,34 @@ psi-continuum-v2/
 
 ### 1. Clone repository
 
+```bash
 git clone https://github.com/dmitrylife/psi-continuum-v2.git
 cd psi-continuum-v2
+```
 
 ### 2. Create virtual environment
 
+```bash
 python3 -m venv sci_venv
 source sci_venv/bin/activate
+```
 
 ### 3. Install dependencies
 
+```bash
 pip install -r requirements.txt
-
+```
 ---
 
 ## Running the Full Pipeline
 
 To execute all scientific steps:
 
+```bash
 ./run_all.py
+```
+
+Python ≥ 3.10 recommended.
 
 This performs:
 
@@ -181,10 +192,18 @@ MIT License © 2025 Dmitry V. Klimov
 
 ---
 
-## Optional Additions
+## 📚 Citation
 
-- Add Ψ-Continuum logo to README
-- Provide English + Russian dual README
-- Generate arXiv-style documentation
-- Add DOI/Zenodo badge
+If you use this repository or figures in your research:
 
+**Dmitry Vasilevich Klimov (2025).
+*Psi–Continuum Cosmology v2: A Minimal One–Parameter Extension of ΛCDM.***
+
+Zenodo. https://doi.org/XXX
+
+---
+
+## 📮 Contact
+
+📧 Email: **d.klimov.psi@gmail.com**
+🌐 Website: **https://psi-continuum.org**
