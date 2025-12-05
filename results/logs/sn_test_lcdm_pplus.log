@@ -1,0 +1,8 @@
+=== sn_test_lcdm_pplus ===
+Command: python3 /home/dmitry/dev/psi-continuum-v2/analysis/sn_test_lcdm_pplus_simple.py
+Started: 2025-12-05 22:18:42.821726
+
+Pantheon+ HF ΛCDM: χ² = 2609.20, χ²/dof = 1.536
+
+Finished: 2025-12-05 22:18:45.759560
+====================================

@@ -1,0 +1,39 @@
+=== joint_fit_psicdm ===
+Command: python3 /home/dmitry/dev/psi-continuum-v2/analysis/joint_fit_psicdm.py
+Started: 2025-12-05 22:19:07.750647
+
+=== Joint ΛCDM vs ΨCDM test ===
+
+ΛCDM parameters:
+  H0  = 70.0
+  Om0 = 0.3
+
+ΨCDM parameters:
+  H0   = 70.0
+  Om0  = 0.3
+  eps0 = 0.05
+  n    = 1.0
+
+--- χ² breakdown (ΛCDM) ---
+SN   : chi2 = 2609.197  (N = 1701)
+H(z) : chi2 = 11.787  (N = 32)
+BAO  : chi2 = 11.141  (N = 6)
+DESI : chi2 = 40.298 (N = 13)
+Total: chi2 = 2672.423, dof = 1752, chi2_red = 1.525
+
+--- χ² breakdown (ΨCDM) ---
+SN   : chi2 = 2616.573  (N = 1701)
+H(z) : chi2 = 11.746  (N = 32)
+BAO  : chi2 = 10.633  (N = 6)
+DESI : chi2 = 27.304 (N = 13)
+Total: chi2 = 2666.256, dof = 1752, chi2_red = 1.522
+
+Δχ² (ΨCDM - ΛCDM):
+  SN   :   +7.376
+  H(z) :   -0.041
+  BAO  :   -0.508
+  DESI :  -12.995
+  Total:   -6.168
+
+Finished: 2025-12-05 22:19:10.060641
+====================================

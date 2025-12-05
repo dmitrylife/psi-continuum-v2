@@ -1,0 +1,7 @@
+# Pantheon+ HF ΛCDM fit
+N_SN = 1701
+H0 = 70.0
+Om0 = 0.3
+chi2 = 2609.197130
+dof = 1699
+chi2_reduced = 1.535725

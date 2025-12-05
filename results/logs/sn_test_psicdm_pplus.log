@@ -1,0 +1,10 @@
+=== sn_test_psicdm_pplus ===
+Command: python3 /home/dmitry/dev/psi-continuum-v2/analysis/sn_test_psicdm_pplus.py
+Started: 2025-12-05 22:18:45.759908
+
+ΛCDM baseline: χ² = 2609.20
+Best ΨCDM: eps0 = -0.1, χ² = 2593.28
+Δχ² = χ²(ΨCDM_best) - χ²(ΛCDM) = -15.919
+
+Finished: 2025-12-05 22:19:05.227156
+====================================

@@ -1,0 +1,14 @@
+=== check_models ===
+Command: python3 /home/dmitry/dev/psi-continuum-v2/analysis/check_models.py
+Started: 2025-12-05 22:18:41.176857
+
+=== Checking ΛCDM model ===
+LCDM basic checks passed.
+=== Checking ΨCDM limit to ΛCDM (eps0 = 0) ===
+PsiCDM → LCDM limit checks passed (eps0 = 0).
+=== Producing ΨCDM diagnostic plots ===
+All model checks finished successfully.
+Figures saved to: /home/dmitry/dev/psi-continuum-v2/results/figures/model_checks
+
+Finished: 2025-12-05 22:18:42.821398
+====================================

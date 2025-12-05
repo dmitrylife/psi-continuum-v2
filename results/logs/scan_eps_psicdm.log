@@ -1,0 +1,16 @@
+=== scan_eps_psicdm ===
+Command: python3 /home/dmitry/dev/psi-continuum-v2/analysis/scan_eps_psicdm.py
+Started: 2025-12-05 22:19:10.060915
+
+ΛCDM reference χ² = 2672.4230776552276
+Scanning eps0...
+
+=== ΨCDM best-fit ===
+eps0_best = 0.075000
+χ²_best   = 2665.511
+Δχ²_best  = -6.912
+Table saved to: /home/dmitry/dev/psi-continuum-v2/results/tables/eps_scan_psicdm.txt
+Plot saved: /home/dmitry/dev/psi-continuum-v2/results/figures/eps_scan_total.png
+
+Finished: 2025-12-05 22:20:06.105721
+====================================

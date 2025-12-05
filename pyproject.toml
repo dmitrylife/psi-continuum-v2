@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "psi-continuum-v2"
+version = "0.2.0"
+description = "Psi-Continuum v2: cosmological framework and joint likelihood analysis for the Psi-CDM model."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+
+authors = [
+  { name = "Dmitry V. Klimov" }
+]
+
+keywords = [
+  "cosmology",
+  "psi-continuum",
+  "lcdm",
+  "dark-energy",
+  "supernovae",
+  "bao",
+  "desi",
+]
+
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Scientific/Engineering",
+  "Topic :: Scientific/Engineering :: Astronomy",
+  "Topic :: Scientific/Engineering :: Physics",
+]
+
+dependencies = [
+  "numpy>=1.23",
+  "scipy>=1.9",
+  "matplotlib>=3.6",
+]
+
+[project.urls]
+Homepage = "https://github.com/dmitrylife/psi-continuum-v2"
+Source   = "https://github.com/dmitrylife/psi-continuum-v2"
+
+[tool.setuptools]
+packages = [
+  "psi_continuum_v2",
+  "cosmology",
+]
+
+[tool.setuptools.package-dir]

@@ -1,0 +1,12 @@
+=== bao_desi_test ===
+Command: python3 /home/dmitry/dev/psi-continuum-v2/analysis/bao_desi_dr2_test.py
+Started: 2025-12-05 22:19:06.429648
+
+=== DESI DR2 BAO test ===
+χ²_LCDM  = 40.298
+χ²_PsiCDM = 40.298
+Δχ² (Psi - LCDM) = 0.000
+Figures saved to: /home/dmitry/dev/psi-continuum-v2/results/figures
+
+Finished: 2025-12-05 22:19:07.750341
+====================================

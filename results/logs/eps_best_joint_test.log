@@ -1,0 +1,31 @@
+=== eps_best_joint_test ===
+Command: python3 /home/dmitry/dev/psi-continuum-v2/analysis/eps_best_joint_test.py
+Started: 2025-12-05 22:20:06.106035
+
+=== ΨCDM joint test at ε₀ = 0.031 ===
+
+ΛCDM:
+  χ²_SN   = 2609.197
+  χ²_H(z) = 11.787
+  χ²_BAO  = 11.141
+  χ²_DESI = 40.298
+  TOTAL   = 2672.423
+
+ΨCDM (ε₀ = 0.031):
+  χ²_SN   = 2613.813
+  χ²_H(z) = 11.753
+  χ²_BAO  = 10.815
+  χ²_DESI = 31.457
+  TOTAL   = 2667.838
+
+Δχ² (ΨCDM − ΛCDM):
+  SN      : +4.616
+  H(z)    : -0.034
+  SDSS BAO: -0.326
+  DESI    : -8.841
+  TOTAL   : -4.585
+
+Saved: /home/dmitry/dev/psi-continuum-v2/results/tables/eps_best_joint.txt
+
+Finished: 2025-12-05 22:20:08.215228
+====================================
