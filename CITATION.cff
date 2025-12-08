@@ -1,0 +1,43 @@
+cff-version: 1.2.0
+title: "Psi-Continuum v2: Cosmological Framework and Analysis Tools"
+message: "If you use this software, please cite it using the metadata below."
+type: software
+
+authors:
+  - family-names: Klimov
+    given-names: Dmitry V.
+
+repository-code: "https://github.com/dmitrylife/psi-continuum-v2"
+
+doi: 10.5281/zenodo.17850493
+date-released: "2025-12-08"
+
+abstract: >
+  Psi-Continuum v2 provides a reproducible scientific framework for testing
+  the Psi-CDM cosmological model using supernovae, H(z) datasets, SDSS BAO,
+  and DESI DR2 BAO likelihoods. Includes reproducible analysis scripts,
+  data loaders, background expansion models, and joint χ² utilities.
+
+keywords:
+  - cosmology
+  - psi-continuum
+  - lcdm
+  - bao
+  - desi
+  - pantheon
+  - dark energy
+
+license: MIT
+version: "0.2.0"
+
+preferred-citation:
+  type: software
+  title: "Psi-Continuum v2: A Minimal One-Parameter Extension of ΛCDM"
+  authors:
+    - family-names: Klimov
+      given-names: Dmitry V.
+  year: 2025
+  version: "0.2.0"
+  doi: 10.5281/zenodo.17850493
+  repository-code: "https://github.com/dmitrylife/psi-continuum-v2"
+  url: "https://psi-continuum.org"
