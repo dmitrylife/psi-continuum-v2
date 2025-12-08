@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "psi-continuum-v2"
-version = "0.2.0"
+version = "0.2.1"
 description = "Psi-Continuum v2: cosmological framework and joint likelihood analysis for the Psi-CDM model."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -71,4 +71,3 @@ psi-check-data = "psi_continuum_v2.check_data:main"
 
 [project.optional-dependencies]
 test = ["pytest"]
-
