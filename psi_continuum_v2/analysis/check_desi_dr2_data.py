@@ -11,6 +11,7 @@ Check DESI DR2 Gaussian BAO dataset:
 from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
+plt.style.use('psi_continuum_v2/analysis/styles/psi_style.mplstyle')
 
 from psi_continuum_v2.cosmology.data_loaders.desi_loader import load_desi_dr2
 

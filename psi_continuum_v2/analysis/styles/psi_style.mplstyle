@@ -1,0 +1,58 @@
+# ============================
+#   Psi-Continuum v2 Style
+#   Publication-quality plots
+# ============================
+
+# ---- Figure ----
+figure.figsize: 8, 5
+figure.dpi: 160
+savefig.dpi: 300
+savefig.bbox: tight
+
+# ---- Fonts ----
+font.family: sans-serif
+font.sans-serif: DejaVu Sans
+font.size: 12
+
+axes.titlesize: 15
+axes.labelsize: 14
+xtick.labelsize: 12
+ytick.labelsize: 12
+legend.fontsize: 12
+
+# ---- Axes appearance ----
+axes.linewidth: 1.3
+axes.grid: True
+axes.grid.axis: both
+axes.grid.which: major
+grid.color: 0.7
+grid.linewidth: 0.6
+grid.alpha: 0.4
+
+# Remove top/right spines (cleaner scientific look)
+axes.spines.top: False
+axes.spines.right: False
+
+# ---- Lines ----
+lines.linewidth: 2.2
+lines.markersize: 6
+
+# ---- Colors ----
+axes.prop_cycle: cycler('color', ['#000000', '#d62728', '#1f77b4', '#ff7f0e', '#2ca02c'])
+
+# ---- Legends ----
+legend.frameon: False
+legend.handlelength: 3
+
+# ---- Ticks ----
+xtick.direction: in
+ytick.direction: in
+xtick.major.width: 1.2
+ytick.major.width: 1.2
+xtick.major.size: 6
+ytick.major.size: 6
+
+# ---- Misc ----
+axes.formatter.use_mathtext: True
+axes.formatter.limits: -3, 3
+

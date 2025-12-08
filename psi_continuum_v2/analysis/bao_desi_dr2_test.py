@@ -13,6 +13,8 @@ Outputs:
 from __future__ import annotations
 import numpy as np
 import matplotlib.pyplot as plt
+plt.style.use('psi_continuum_v2/analysis/styles/psi_style.mplstyle')
+
 from pathlib import Path
 
 from psi_continuum_v2.cosmology.data_loaders.desi_loader import load_desi_dr2

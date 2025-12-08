@@ -13,6 +13,7 @@ from pathlib import Path
 
 import numpy as np
 import matplotlib.pyplot as plt
+plt.style.use('psi_continuum_v2/analysis/styles/psi_style.mplstyle')
 
 from psi_continuum_v2.cosmology.data_loaders.hz_loader import load_hz_compilation
 from psi_continuum_v2.cosmology.background.lcdm import H_lcdm

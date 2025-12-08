@@ -47,6 +47,7 @@ from pathlib import Path
 
 import numpy as np
 import matplotlib.pyplot as plt
+plt.style.use('psi_continuum_v2/analysis/styles/psi_style.mplstyle')
 
 # --- Cosmology imports ---
 from psi_continuum_v2.cosmology.background.lcdm import (
