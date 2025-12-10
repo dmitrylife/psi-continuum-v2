@@ -1,4 +1,4 @@
-# analysis/make_publication_plots.py
+# analysis/plots/make_publication_plots.py
 
 """
 Publication-grade plot generator for Psi-Continuum v2.
@@ -47,7 +47,7 @@ from pathlib import Path
 
 import numpy as np
 import matplotlib.pyplot as plt
-plt.style.use('psi_continuum_v2/analysis/styles/psi_style.mplstyle')
+from psi_continuum_v2.utils import get_data_path
 
 # --- Cosmology imports ---
 from psi_continuum_v2.cosmology.background.lcdm import (
@@ -92,7 +92,8 @@ def find_eps_scan_table() -> Path:
         results/tables/eps_scan_psicdm.txt
         any *eps*scan*.txt under results/tables/
     """
-    root = Path(__file__).resolve().parents[2]
+    root = Path.cwd()
+
     base = root / "results" / "tables"
 
     preferred = [
@@ -203,8 +204,7 @@ def fig2_SN_Hubble(figdir: Path) -> None:
     """
     Fig. 2 – Hubble diagram + residuals for Pantheon+ HF.
     """
-    root = Path(__file__).resolve().parents[2]
-    sn = load_pantheonplus_hf(root / "data" / "pantheon_plus")
+    sn = load_pantheonplus_hf(get_data_path("pantheon_plus"))
 
     z = sn["z"]
     mu_obs = sn["mu"]
@@ -249,10 +249,9 @@ def fig3_BAO_DR12_multipanel(figdir: Path) -> None:
     """
     Fig. 3 – SDSS DR12 BAO distance measures: DM/rs, DH/rs, DV/rs.
     """
-    root = Path(__file__).resolve().parents[2]
     rd = 147.0  # effective sound horizon used for visualisation
 
-    bao = load_bao_dr12(root / "data" / "bao")
+    bao = load_bao_dr12(get_data_path("bao"))
     z = bao["z"]
     dm_rs = bao["dm_rs"]  # D_M / r_d
     hz_rs = bao["hz_rs"]  # H * r_d / c
@@ -295,8 +294,7 @@ def fig4_BAO_DESI_multipanel(figdir: Path) -> None:
     """
     Fig. 4 – DESI DR2 compressed BAO vector: DM/rs, DH/rs, DV/rs.
     """
-    root = Path(__file__).resolve().parents[2]
-    desi = load_desi_dr2(root / "data" / "desi" / "dr2")
+    desi = load_desi_dr2(get_data_path("desi", "dr2"))
 
     DMz, DMv = [], []
     DHz, DHv = [], []
@@ -342,11 +340,11 @@ def fig5_BAO_fits_LCDM_vs_PsiCDM(figdir: Path) -> None:
     Fig. 5 – BAO fits: ΛCDM and ΨCDM curves over SDSS DR12 + DESI DR2.
     Plots DM/rs, DH/rs, DV/rs for both data sets and both models.
     """
-    root = Path(__file__).resolve().parents[2]
     rd = 147.0  # only for visualization
 
     # --- SDSS DR12 data ---
-    bao = load_bao_dr12(root / "data" / "bao")
+    bao = load_bao_dr12(get_data_path("bao"))
+
     z_dr12 = bao["z"]
     dm_rs_dr12 = bao["dm_rs"]
     hz_rs_dr12 = bao["hz_rs"]
@@ -356,7 +354,8 @@ def fig5_BAO_fits_LCDM_vs_PsiCDM(figdir: Path) -> None:
     DV_dr12_rs = (DM_dr12_rs**2 * z_dr12 * DH_dr12_rs) ** (1/3)
 
     # --- DESI DR2 data ---
-    desi = load_desi_dr2(root / "data" / "desi" / "dr2")
+    desi = load_desi_dr2(get_data_path("desi", "dr2"))
+
     DMz_desi, DMv_desi = [], []
     DHz_desi, DHv_desi = [], []
     DVz_desi, DVv_desi = [], []
@@ -436,8 +435,7 @@ def fig6_Hz_dataset(figdir: Path) -> None:
     """
     Fig. 6 – H(z) dataset with ΛCDM and ΨCDM curves.
     """
-    root = Path(__file__).resolve().parents[2]
-    hzdata = load_hz_compilation(root / "data" / "hz")
+    hzdata = load_hz_compilation(get_data_path("hz"))
 
     z = hzdata["z"]
     Hz = hzdata["Hz"]
@@ -523,8 +521,7 @@ def appendix_sn_histograms(figdir: Path) -> None:
     """
     Pantheon+ HF histograms: z-distribution and σ_mu distribution.
     """
-    root = Path(__file__).resolve().parents[2]
-    sn = load_pantheonplus_hf(root / "data" / "pantheon_plus")
+    sn = load_pantheonplus_hf(get_data_path("pantheon_plus"))
     z = sn["z"]
     mu_err = sn["mu_err"]
 
@@ -551,8 +548,7 @@ def appendix_hz_quality(figdir: Path) -> None:
     """
     H(z) quality plots: data points + relative error histogram.
     """
-    root = Path(__file__).resolve().parents[2]
-    hzdata = load_hz_compilation(root / "data" / "hz")
+    hzdata = load_hz_compilation(get_data_path("hz"))
 
     z = hzdata["z"]
     Hz = hzdata["Hz"]
@@ -638,8 +634,7 @@ def appendix_hz_only_chi2_scan(figdir: Path) -> None:
     """
     Δχ²(ε0) for H(z) only (ΛCDM vs ΨCDM).
     """
-    root = Path(__file__).resolve().parents[2]
-    hzdata = load_hz_compilation(root / "data" / "hz")
+    hzdata = load_hz_compilation(get_data_path("hz"))
 
     lcdm = LCDMParams(H0=70.0, Om0=0.3)
     chi2_l = chi2_hz(hzdata, H_lcdm, lcdm)
@@ -689,11 +684,10 @@ def appendix_bao_raw(figdir: Path) -> None:
         - SDSS DR12 (DM/rs, DH/rs, DV/rs)
         - DESI DR2 compressed vector (DM/rs, DH/rs, DV/rs)
     """
-    root = Path(__file__).resolve().parents[2]
     rd = 147.0
 
     # DR12
-    bao = load_bao_dr12(root / "data" / "bao")
+    bao = load_bao_dr12(get_data_path("bao"))
     z = bao["z"]
     dm_rs = bao["dm_rs"]
     hz_rs = bao["hz_rs"]
@@ -722,7 +716,8 @@ def appendix_bao_raw(figdir: Path) -> None:
     plt.close(fig)
 
     # DESI
-    desi = load_desi_dr2(root / "data" / "desi" / "dr2")
+    desi = load_desi_dr2(get_data_path("desi", "dr2"))
+
     DMz, DMv = [], []
     DHz, DHv = [], []
     DVz, DVv = [], []
@@ -892,9 +887,9 @@ def poster_summary(summary_dir: Path, main_dir: Path) -> None:
 # ======================================================================
 
 def main() -> None:
-    project_root = Path(__file__).resolve().parents[2]
+    root = Path.cwd()
+    pub_root = root / "results" / "figures" / "publication"
 
-    pub_root = project_root / "results" / "figures" / "publication"
     main_dir = pub_root / "main_figures"
     appendix_dir = pub_root / "appendix"
     talk_dir = pub_root / "talk_figures"

@@ -1,4 +1,4 @@
-# analysis/check_pantheonplus_data.py
+# analysis/check/check_pantheonplus_data.py
 
 """
 Check Pantheon+ SH0ES HF supernova dataset:
@@ -8,25 +8,26 @@ Check Pantheon+ SH0ES HF supernova dataset:
         * redshift distribution
         * distance-modulus uncertainty distribution
 
-Output directory:
+Output directory (automatically determined):
     results/figures/data_checks/
 """
 
-from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
-plt.style.use('psi_continuum_v2/analysis/styles/psi_style.mplstyle')
 
+from psi_continuum_v2.utils import get_data_path, get_results_path
 from psi_continuum_v2.cosmology.data_loaders import (
     load_pantheonplus_hf,
     validate_pantheonplus_dataset,
 )
 
 
-def main():
-    project_root = Path(__file__).resolve().parents[2]
-    data_dir = project_root / "data" / "pantheon_plus"
-    fig_dir = project_root / "results" / "figures" / "data_checks"
+def main() -> None:
+    # -------------------------------------------------------------
+    # Locate input dataset and output directory
+    # -------------------------------------------------------------
+    data_dir = get_data_path("pantheon_plus", must_exist=True)
+    fig_dir = get_results_path("figures", "data_checks")
     fig_dir.mkdir(parents=True, exist_ok=True)
 
     # -------------------------------------------------------------

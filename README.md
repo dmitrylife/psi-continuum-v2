@@ -1,8 +1,10 @@
 # Psi-Continuum v2  
 
 ### A Minimal One-Parameter Extension of ΛCDM  
-**Author:** Dmitry V. Klimov
-**Status:** Research Prototype (v0.2.1)
+**Author:** Dmitry Vasilevich Klimov
+**Status:** Research Prototype (v0.2.2)
+
+📘 **Documentation:** https://psi-continuum.org/docs/v2
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)
@@ -12,88 +14,189 @@
 
 ## Overview
 
-Psi-Continuum (ΨCDM) is a minimal phenomenological extension of ΛCDM that 
-introduces **one additional parameter ε₀**, modifying late-time expansion while
-retaining ΛCDM as an exact limit.
+Psi-Continuum (ΨCDM) is a minimal phenomenological extension of ΛCDM that
+introduces a single deformation parameter ε₀, modifying the late-time expansion
+rate while retaining ΛCDM exactly as ε₀ → 0.
+It is designed as a strictly background-level model for late-time expansion, 
+without modifying perturbations or early-Universe physics.
 
-Background expansion is written as:
+The modified Hubble function is:
 
-```mathematica
-E²(z) = Ω_m (1 + z)³ + (1 − Ω_m) · [1 + ε₀ · g(z)]
-```
+$$
+H_{\Psi}(z) = H_{\Lambda}(z)\left(1 + \frac{\varepsilon_{0}}{1+z}\right)
+$$
 
-where g(z) is chosen such that:
-- g(0) = 1     → parameter interpretable as a fractional deformation of dark energy,
-- g(z → ∞) → 0  → model preserves early ΛCDM behaviour.
+This parametrisation ensures strict ΛCDM recovery at ε₀ = 0 and suppresses deviations as z → ∞.
 
-If ε₀ = 0 → ΨCDM reduces to ΛCDM.
+A smooth percent-level correction at low redshift:
 
-This repository includes:
-
-- ΛCDM and ΨCDM background cosmology
-- Pantheon+ HF supernovae loader + full covariance χ²
-- H(z) cosmic chronometer compilation
-- SDSS DR12 BAO consensus
-- DESI DR2 Gaussian BAO likelihood
-- Joint likelihood and χ² breakdown
-- ε₀ scanning, minimization, comparison with ΛCDM
-- Publication-grade figure generation
-- A complete reproducible pipeline (`run_all.py`)
+- reduces to ΛCDM when ε₀ = 0,
+- preserves all early-Universe observables (CMB, primordial BAO),
+- is interpretable as a macroscopic entropy/dissipation response term.
 
 ---
 
-## Main Scientific Results
+## Included in This Repository
 
-- Pantheon+ HF slightly prefers **ε₀ < 0**  
-- DESI DR2 BAO strongly prefers **ε₀ > 0**  
-- Joint background fit (SN + H(z) + SDSS DR12 BAO + DESI DR2) yields:
+This repository provides a fully reproducible late-time cosmology pipeline, including:
 
-### **ε₀_best = +0.031 ± 0.010**
+### Cosmological Models
+- ΛCDM background expansion
+- ΨCDM background with deformation parameter ε₀
+- Distance measures:
+  - H(z)
+  - E(z)
+  - d_L(z)
+  - D_M / r_d
+  - D_H / r_d
+  - D_V / r_d
 
-### **Total Δχ² improvement relative to ΛCDM: −6.9**
+### Data Loaders
+- Pantheon+ High-Fidelity SNe Ia (full covariance χ²)
+- 32 cosmic-chronometer H(z) measurements
+- SDSS BOSS DR12 consensus BAO
+- DESI DR2 Gaussian BAO likelihood
 
-This means ΨCDM provides a statistically better description of late-time background data while remaining indistinguishable from ΛCDM at early times.
+### Likelihoods & Analysis
+- Full joint χ²: SN + CC + SDSS DR12 + DESI DR2
+- ε₀ scans and Δχ² profiling
+- Best-fit extraction and ΛCDM comparison
+- Statistical χ² breakdown per dataset
+- Publication-ready figure generator:
+  - make_publication_plots.py
+
+### Tools
+- psi-cli for quick computations and model comparison
+- Data-validation utilities
+- Publication-ready figures used in the 2025 paper
+
+---
+
+## Main Scientific Results (v2)
+
+Using the joint late-time dataset:
+
+- **Pantheon+ HF** → weak preference for ε₀ < 0  
+- **DESI DR2 BAO** → strong preference for ε₀ > 0  
+- **SDSS DR12 BAO + CC** → broadly consistent with ΛCDM  
+
+The combined likelihood yields:
+
+**Best-fit deformation parameter:**
+
+$$
+\varepsilon_{0}^{\text{best}} = +0.031 \pm 0.010
+$$
+
+**Global improvement relative to ΛCDM (background-only):**
+
+$$
+\Delta\chi^2_{\text{total}} = -6.9
+$$
+
+Thus ΨCDM provides a statistically better description of the late-time expansion
+history while remaining indistinguishable from ΛCDM at high redshift.
+
+---
 
 ## Repository Structure
 
 ```text
 psi-continuum-v2/
-├── psi_continuum_v2/
-│   ├── analysis/                # reproducible analysis scripts
-│   │   ├── styles/              # Matplotlib style sheet for publication plots
-│   │   └── *.py
-│   ├── cosmology/               # theory, loaders, likelihoods
-│   │   ├── background/
-│   │   ├── likelihoods/
-│   │   ├── data_loaders/
-│   │   └── models/
-│   ├── check_imports.py         # internal sanity check tool
-│   └── __init__.py
-│
-├── data/                        # input datasets (Pantheon+, H(z), BAO, DESI)
-├── results/
-│   ├── figures/
-│   ├── tables/
-│   └── logs/
-│
-├── examples/                    # minimal demonstration scripts
-├── run_all.py
-├── requirements.txt
-└── README.md
+├── .github
+│   └── workflows
+│       └── tests.yml
+├── CITATION.cff
+├── CONTRIBUTING.md
+├── LICENSE
+├── MANIFEST.in
+├── README.md
+├── data
+│   ├── bao
+│   │   ├── BAO_consensus_covtot_dM_Hz.txt
+│   │   └── sdss_DR12Consensus_bao.dat
+│   ├── desi
+│   │   └── dr2
+│   │       ├── desi_gaussian_bao_ALL_GCcomb_cov.txt
+│   │       └── desi_gaussian_bao_ALL_GCcomb_mean.txt
+│   ├── hz
+│   │   └── HZ_compilation.csv
+│   └── pantheon_plus
+│       ├── Pantheon+SH0ES.dat
+│       └── Pantheon+SH0ES_STAT+SYS.cov
+├── psi_continuum_v2
+│   ├── analysis
+│   │   ├── check
+│   │   │   ├── check_bao_dr12_data.py
+│   │   │   ├── check_desi_dr2_data.py
+│   │   │   ├── check_hz_data.py
+│   │   │   ├── check_models.py
+│   │   │   └── check_pantheonplus_data.py
+│   │   ├── pipeline
+│   │   │   └── joint_fit_psicdm.py
+│   │   ├── plots
+│   │   │   └── make_publication_plots.py
+│   │   ├── scans
+│   │   │   └── scan_eps_psicdm.py
+│   │   ├── styles
+│   │   │   └── psi_style.mplstyle
+│   │   └── tests
+│   │       ├── bao_desi_dr2_test.py
+│   │       ├── eps_best_joint_test.py
+│   │       ├── hz_test_psicdm.py
+│   │       ├── sn_test_lcdm_pplus_simple.py
+│   │       └── sn_test_psicdm_pplus.py
+│   ├── check_data.py
+│   ├── cli
+│   │   ├── menu.py
+│   │   └── run_all.py
+│   ├── cosmology
+│   │   ├── background
+│   │   │   ├── distances.py
+│   │   │   ├── lcdm.py
+│   │   │   └── psicdm.py
+│   │   ├── constants.py
+│   │   ├── data_loaders
+│   │   │   ├── bao_loader.py
+│   │   │   ├── covariance_loader.py
+│   │   │   ├── desi_loader.py
+│   │   │   ├── hz_loader.py
+│   │   │   ├── pantheonplus_loader.py
+│   │   │   └── validators.py
+│   │   ├── likelihoods
+│   │   │   ├── bao_likelihood.py
+│   │   │   ├── hz_likelihood.py
+│   │   │   ├── joint_likelihood.py
+│   │   │   └── sn_likelihood.py
+│   │   └── models
+│   │       ├── lcdm_params.py
+│   │       └── psicdm_params.py
+│   ├── data_manager
+│   │   ├── download.py
+│   │   └── sources.py
+│   ├── tests
+│   │   └── test_check_data.py
+│   └── utils
+│       ├── paths.py
+│       └── style.py
+└──pyproject.toml
 ```
 
 Figures generated by the publication pipeline are saved under:
 
-`results/figures/publication/main_figures/`
+- `results/figures/publication/main_figures/`
+- `results/figures/publication/appendix/`
+- `results/figures/bao/`
 
 ---
 
 ## Installation
 
-## Installation Options
+Installation options:
 
- - Installation via PyPI (recommended)
- - Installation from source (clone repository)
+- Installation via PyPI (recommended)
+- Installation from GitHub (development version)
+- Installation from source (clone repository)
 
 ### Installation via PyPI (recommended)
 
@@ -103,24 +206,56 @@ You can install Psi-Continuum v2 directly from PyPI:
 pip install psi-continuum-v2
 ```
 
-This installs only the code of the package.
-All scientific datasets must be downloaded manually and placed into a local `data/` directory (see Section “Preparing the `data/` Directory”).
+This only installs the package code.
+All scientific datasets must be downloaded manually and placed in the local `data/` directory 
+(see the section "Preparing the data/ directory"). 
+Or they can be downloaded from the repository using the `psi-cli` command.
 
-After installation you can check whether your data directory is correctly set up:
+---
 
-```bash
-python -m psi_continuum_v2.check_data
-```
+## Command-Line Interface (CLI)
 
-If data files are missing, the tool will print clear **MISSING** messages and instructions on where to place them.
-
-To run analysis scripts installed via pip:
+### **Interactive CLI**
 
 ```bash
-python -m psi_continuum_v2.analysis.sn_test_psicdm_pplus
+psi-cli
 ```
 
-### 1. Clone the repository
+Menu options:
+
+> 1. Download datasets
+> 2. Check datasets
+> 3. Run full analysis pipeline
+> 4. Open documentation
+> 5. Show project paths
+
+This is the recommended entry point for new users.
+
+### Automatic dataset download
+
+Psi-Continuum v2 includes a built-in downloader:
+
+```bash
+psi-download-data
+```
+
+This command creates data/ automatically and fetches all required datasets from the official GitHub mirror.
+
+----
+
+### Installation from GitHub (latest development version)
+
+```bash
+pip install git+https://github.com/dmitrylife/psi-continuum-v2.git
+```
+
+You need to create a `data/` directory in the current working directory with the dataset 
+structure shown in Section - Preparing the `data/` Directory.
+
+---
+
+### Clone the repository
+
 ```bash
 git clone https://github.com/dmitrylife/psi-continuum-v2.git
 ```
@@ -129,66 +264,57 @@ git clone https://github.com/dmitrylife/psi-continuum-v2.git
 cd psi-continuum-v2
 ```
 
-### 2. Create virtual environment
+### Create virtual environment
 
 ```bash
 python3 -m venv sci_venv
-```
-
-and
-
-```bash
 source sci_venv/bin/activate
 ```
 
-### 3. Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 4. (Optional) Install the package as editable
+### (Optional) Install the package as editable
 
 ```bash
 pip install -e .
 ```
 
-If you installed the package via `pip` (rather than cloning the repository),
-you must create a `data/` directory in your current working directory, with the
-dataset layout shown in Section 5.
+### Or Interactive CLI
 
-## 5. Preparing the `data/` Directory
+```bash
+psi-cli
+```
 
-The `data/` directory is intentionally **excluded** from both the GitHub repository 
-and the PyPI package.  
+---
+
+### Preparing the `data/` Directory
+
+The `data/` directory is intentionally **excluded** from the PyPI package.  
 Users must download all datasets manually and place them in the directory structure shown below.
 
 The expected directory layout is:
 
 ```text
 data/
-├── pantheon_plus/
-│   ├── Pantheon+SH0ES.dat
-│   └── Pantheon+SH0ES_STAT+SYS.cov
-│
-├── hz/
+├── bao
+│   ├── BAO_consensus_covtot_dM_Hz.txt
+│   └── sdss_DR12Consensus_bao.dat
+├── desi
+│   └── dr2
+│       ├── desi_gaussian_bao_ALL_GCcomb_cov.txt
+│       └── desi_gaussian_bao_ALL_GCcomb_mean.txt
+├── hz
 │   └── HZ_compilation.csv
-│
-├── bao/
-│   ├── sdss_DR12Consensus_bao.dat
-│   └── BAO_consensus_covtot_dM_Hz.txt
-│
-└── desi/dr2/
-    ├── desi_gaussian_bao_ALL_GCcomb_mean.txt
-    └── desi_gaussian_bao_ALL_GCcomb_cov.txt
+└── pantheon_plus
+    ├── Pantheon+SH0ES.dat
+    └── Pantheon+SH0ES_STAT+SYS.cov
 ```
 
-You may download these datasets from their original public sources:
+You may download these datasets from their original public sources 
+or download using the `psi-download-data` command:
 
  - Pantheon+ HF supernova sample
  - Cosmic chronometer H(z) compilation
  - SDSS DR12 BAO consensus
- - DESI DR2 Gaussian BAO data
+ - DESI DR2 Gaussian BAO data 
 
 Place all files exactly under the paths shown above.
 
@@ -199,12 +325,6 @@ required files are visible to the package:
 
 ```bash
 psi-check-data
-```
-
-or, equivalently:
-
-```bash
-python -m psi_continuum_v2.check_data
 ```
 
 This command will report, for each dataset, whether the expected files
@@ -222,51 +342,6 @@ When installed via pip, the tool looks for the data/ directory in your current w
 If some files are missing, the analysis scripts will raise a clear
 FileNotFoundError with instructions on where to place the data.
 
-**Now modules can be executed as:**
-
-```bash
-python -m psi_continuum_v2.analysis.sn_test_psicdm_pplus
-```
----
-
-## Running the Full Pipeline
-
-Execute all analysis scripts sequentially:
-
-```bash
-./run_all.py
-```
-
-This runs:
-
-1. check_models.py
-2. sn_test_lcdm_pplus_simple.py
-3. sn_test_psicdm_pplus.py
-4. hz_test_psicdm.py
-5. bao_desi_dr2_test.py
-6. joint_fit_psicdm.py
-7. scan_eps_psicdm.py
-8. eps_best_joint_test.py
-9. make_publication_plots.py
-
-This script automatically loads the `psi_style.mplstyle` file to ensure consistent formatting.
-
-Logs produced in:
-
-```text
-results/logs/
-```
-
----
-
-## Running Individual Scripts
-
-Example:
-
-```bash
-python -m psi_continuum_v2.analysis.hz_test_psicdm
-```
-
 ---
 
 ## Examples
@@ -280,40 +355,84 @@ examples/
 Run example:
 
 ```bash
-python examples/example_sn.py
+python3 examples/example_bao.py
+python3 examples/example_hz.py
+python3 examples/example_joint.py
+python3 examples/example_sn.py
+
 ```
 
 ---
 
-## Output Structure
+## Output Directory Structure
 
-### Figures (publication-ready)
-
-Stored in:
 
 ```text
-results/figures/
-```
+results/
+├── figures
+│   ├── bao
+│   │   ├── desi_dr2_DH.png
+│   │   ├── desi_dr2_DM.png
+│   │   └── desi_dr2_DV.png
+│   ├── data_checks
+│   │   ├── bao_dr12_DM_check.png
+│   │   ├── bao_dr12_Hz_check.png
+│   │   ├── desi_dr2_DH_check.png
+│   │   ├── desi_dr2_DM_check.png
+│   │   └── desi_dr2_DV_check.png
+│   ├── hz
+│   │   ├── hz_psicdm_chi2_eps_scan.png
+│   │   └── hz_psicdm_test.png
+│   ├── model_checks
+│   │   ├── lcdm_Ez.png
+│   │   ├── lcdm_Hz.png
+│   │   ├── lcdm_dL.png
+│   │   ├── psicdm_eps_scan_Ez.png
+│   │   └── psicdm_vs_lcdm_Ez.png
+│   ├── publication
+│   │   ├── appendix
+│   │   │   ├── bao_desi_raw.png
+│   │   │   ├── bao_dr12_raw.png
+│   │   │   ├── hz_only_chi2_scan.png
+│   │   │   ├── hz_quality_checks.png
+│   │   │   ├── model_lcdm_Ez_Hz_dL.png
+│   │   │   ├── model_psicdm_Ez_scan.png
+│   │   │   └── sn_histograms.png
+│   │   ├── main_figures
+│   │   │   ├── fig1_Ez_comparison.png
+│   │   │   ├── fig2_SN_Hubble.png
+│   │   │   ├── fig3_BAO_DR12_multipanel.png
+│   │   │   ├── fig4_BAO_DESI_multipanel.png
+│   │   │   ├── fig5_BAO_fits_LCDM_vs_PsiCDM.png
+│   │   │   ├── fig6_Hz_dataset.png
+│   │   │   ├── fig7_joint_chi2_eps.png
+│   │   │   └── fig8_delta_chi2_contributions.png
+│   │   ├── summary
+│   │   │   └── poster_summary.png
+│   │   └── talk_figures
+│   │       ├── talk_bao.png
+│   │       ├── talk_sn.png
+│   │       └── talk_summary.png
+│   ├── scan
+│   │   └── eps_scan_total.png
+│   └── sn
+│       ├── pantheonplus_hf_chi2_eps_scan.png
+│       ├── pantheonplus_hf_hubble_diagram.png
+│       └── pantheonplus_hf_residuals.png
+├── tables
+│   ├── bao
+│   │   └── desi_dr2_chi2.txt
+│   ├── hz
+│   │   └── hz_psicdm_chi2.txt
+│   ├── joint
+│   │   ├── eps_best_joint.txt
+│   │   └── joint_fit_summary.txt
+│   ├── scan
+│   │   └── eps_scan_psicdm.txt
+│   └── sn
+│       ├── chi2_eps_scan.txt
+└──     └── pantheonplus_hf_chi2_lcdm.txt
 
-Publication-ready figures are stored in:
-
-`results/figures/publication/main_figures/`
-
-Appendix figures in:
-
-`results/figures/publication/appendix/`
-
-
-### Tables
-
-```text
-results/tables/
-```
-
-### Logs
-
-```text
-results/logs/
 ```
 
 ---
@@ -326,24 +445,11 @@ All publication-ready figures use the custom Matplotlib style:
 
 contains the file:
 
-- `textpsi_style.mplstyle`
+- `psi_style.mplstyle`
 
 This style enforces consistent fonts, line widths, grids, color palette, and
 overall layout across all figures generated by the analysis pipeline
 (`make_publication_plots.py`).
-
----
-
-## Scientific Roadmap
-
-Planned upgrades:
-
- - MCMC inference using emcee
- - Full DESI DR2 non-Gaussian BAO likelihood
- - Growth-rate constraints (fσ₈)
- - CMB distance-prior incorporation
- - Perturbation-theory extension of ΨCDM
- - Exploration of functional forms of g(z)
 
 ---
 
@@ -359,9 +465,9 @@ See the **LICENSE** file for details.
 If you use Psi-Continuum v2 in academic work:
 
 ```
-Klimov, D. V. (2025).
+Dmitry Vasilevich Klimov (2025).
 Psi–Continuum Cosmology v2: A Minimal One–Parameter Extension of ΛCDM.
-Zenodo. DOI: (to appear)
+Zenodo. DOI: 10.5281/zenodo.17879744
 ```
 
 Machine-readable citation is provided in CITATION.cff.

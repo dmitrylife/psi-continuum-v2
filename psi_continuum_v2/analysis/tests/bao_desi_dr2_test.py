@@ -1,4 +1,4 @@
-# analysis/bao_desi_dr2_test.py
+# analysis/tests/bao_desi_dr2_test.py
 
 """
 DESI DR2 BAO test for ΛCDM and ΨCDM.
@@ -13,9 +13,8 @@ Outputs:
 from __future__ import annotations
 import numpy as np
 import matplotlib.pyplot as plt
-plt.style.use('psi_continuum_v2/analysis/styles/psi_style.mplstyle')
 
-from pathlib import Path
+from psi_continuum_v2.utils import get_data_path, get_results_path
 
 from psi_continuum_v2.cosmology.data_loaders.desi_loader import load_desi_dr2
 from psi_continuum_v2.cosmology.background.lcdm import H_lcdm, dL_lcdm
@@ -90,17 +89,18 @@ def chi2(data_vec, cov, model_vec):
 # Main
 # -------------------------------------------------------------------
 def main():
-    root = Path(__file__).resolve().parents[2]
-
     # --------------------------
     # Directories
     # --------------------------
-    data_dir = root / "data" / "desi" / "dr2"
 
-    fig_dir = root / "results" / "figures" / "bao"
-    tab_dir = root / "results" / "tables" / "bao"
+    # Input data directory
+    data_dir = get_data_path("desi", "dr2", must_exist=True)
 
+    # Output directories (next to data/)
+    fig_dir = get_results_path("figures", "bao")
     fig_dir.mkdir(parents=True, exist_ok=True)
+
+    tab_dir = get_results_path("tables", "bao")
     tab_dir.mkdir(parents=True, exist_ok=True)
 
     # --------------------------

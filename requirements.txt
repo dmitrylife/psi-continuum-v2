@@ -5,4 +5,3 @@ matplotlib>=3.6
 # Optional, but recommended for development:
 # tqdm>=4.65       # progress bars for scans
 # pandas>=1.5      # if future analysis scripts require table processing
-

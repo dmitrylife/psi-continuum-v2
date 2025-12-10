@@ -18,8 +18,9 @@ This script:
 Nothing is fitted here — this is a fixed-point evaluation.
 """
 
-from pathlib import Path
 import numpy as np
+
+from psi_continuum_v2.utils import get_data_path, get_results_path
 
 # -------------------- Data loaders --------------------
 
@@ -52,7 +53,7 @@ from psi_continuum_v2.cosmology.models.psicdm_params import PsiCDMParams
 
 
 # ===============================================================
-#                        χ² COMPONENTS
+# χ² COMPONENTS
 # ===============================================================
 
 def chi2_sn(sn, model, lcdm_params=None, psicdm_params=None):
@@ -68,8 +69,8 @@ def chi2_sn(sn, model, lcdm_params=None, psicdm_params=None):
 
     mu_model = mu_from_dL(dL)
     diff = mu_obs - mu_model
-
     invcov = np.linalg.inv(cov)
+
     return float(diff.T @ invcov @ diff)
 
 
@@ -144,17 +145,16 @@ def chi2_desi(desi, model, lcdm_params=None, psicdm_params=None):
 
 
 # ===============================================================
-#                            MAIN
+# MAIN
 # ===============================================================
 
 def main():
-    root = Path(__file__).resolve().parents[2]
 
     # ---------------- Load datasets ----------------
-    sn = load_pantheonplus_hf(root / "data" / "pantheon_plus")
-    hz = load_hz_compilation(root / "data" / "hz")
-    bao = load_bao_dr12(root / "data" / "bao")
-    desi = load_desi_dr2(root / "data" / "desi" / "dr2")
+    sn = load_pantheonplus_hf(get_data_path("pantheon_plus"))
+    hz = load_hz_compilation(get_data_path("hz"))
+    bao = load_bao_dr12(get_data_path("bao"))
+    desi = load_desi_dr2(get_data_path("desi", "dr2"))
 
     # N-points
     N_sn = sn["N"]
@@ -165,7 +165,7 @@ def main():
     # ---------------- Models ----------------
     lcdm = LCDMParams(H0=70.0, Om0=0.3)
 
-    # Best-fit from scan:
+    # Best-fit epsilon from scan
     eps_best = 0.031
     psicdm = PsiCDMParams(H0=70.0, Om0=0.3, eps0=eps_best, n=1.0)
 
@@ -196,7 +196,7 @@ def main():
     )
 
     # ===============================================================
-    #                           REPORT
+    # REPORT
     # ===============================================================
 
     print("\n=== Joint ΨCDM test at eps0 = 0.031 ===\n")
@@ -223,12 +223,11 @@ def main():
     print(f"TOTAL     : {joint_psi.chi2_total - joint_lcdm.chi2_total:+.3f}\n")
 
     # ===============================================================
-    #                         SAVE TABLE
+    # SAVE TABLE
     # ===============================================================
 
-    out_dir = root / "results" / "tables" / "joint"
+    out_dir = get_results_path("tables", "joint")
     out_dir.mkdir(parents=True, exist_ok=True)
-
     out_file = out_dir / "eps_best_joint.txt"
 
     with open(out_file, "w") as f:

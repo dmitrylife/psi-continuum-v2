@@ -5,10 +5,10 @@ Automated pipeline runner for Psi-Continuum v2.
 Runs all analysis scripts in correct scientific order.
 
 Creates:
-    results/logs/run_all.log   — full output of all steps
-    results/logs/<script>.log  — per-script logs
+    results/logs/run_all.log
+    results/logs/<script>.log
 
-Stops on critical errors and prints a summary.
+Results directory is always created NEXT TO data/, not inside cli/.
 """
 
 import subprocess
@@ -16,17 +16,18 @@ import sys
 from pathlib import Path
 from datetime import datetime
 
+from psi_continuum_v2.utils import (
+    get_data_root,
+    get_results_root,
+)
+
 
 # ======================================================
 # Helper functions
 # ======================================================
 
 def run_step(name: str, cmd: list[str], log_dir: Path, master_log):
-    """
-    Run a single analysis step.
-    Save stdout+stderr into results/logs/<name>.log
-    Also mirror output into run_all.log
-    """
+    """Run a single analysis step and store logs."""
     print(f"\n=== Running: {name} ===")
     master_log.write(f"\n=== Running: {name} ===\n")
 
@@ -53,9 +54,9 @@ def run_step(name: str, cmd: list[str], log_dir: Path, master_log):
             print(result.stdout)
 
             if result.returncode != 0:
-                err_msg = f"ERROR: {name} failed with exit code {result.returncode}"
-                print(err_msg)
-                master_log.write(err_msg + "\n")
+                err = f"ERROR: {name} failed with exit code {result.returncode}"
+                print(err)
+                master_log.write(err + "\n")
                 print(f"See log: {logfile}")
                 sys.exit(result.returncode)
 
@@ -78,12 +79,18 @@ def run_step(name: str, cmd: list[str], log_dir: Path, master_log):
 # ======================================================
 
 def main():
-    root = Path(__file__).resolve().parent
+
+    # Determine real project root (2 levels above cli/)
+    root = Path(__file__).resolve().parents[2]
+
     analysis = root / "psi_continuum_v2" / "analysis"
     pkg_root = root / "psi_continuum_v2"
 
-    # logs directory
-    log_dir = root / "results" / "logs"
+    # Compute correct locations
+    data_root = get_data_root()
+    results_root = get_results_root()
+
+    log_dir = results_root / "logs"
     log_dir.mkdir(parents=True, exist_ok=True)
 
     master_log_file = log_dir / "run_all.log"
@@ -96,32 +103,26 @@ def main():
     print("=========================================")
     print("   Psi-Continuum v2 — FULL PIPELINE RUN   ")
     print("=========================================")
+    print(f"Data root   : {data_root}")
+    print(f"Results root: {results_root}\n")
 
     steps = [
-        ("check_data",                ["python3", str(pkg_root / "check_data.py")]),
-        ("check_models",               ["python3", str(analysis / "check_models.py")]),
+        ("check_data",                ["python3", "-m", "psi_continuum_v2.check_data"]),
+        ("check_models",              ["python3", "-m", "psi_continuum_v2.analysis.check.check_models"]),
+        ("check_bao_dr12_data",       ["python3", "-m", "psi_continuum_v2.analysis.check.check_bao_dr12_data"]),
+        ("check_desi_dr2_data",       ["python3", "-m", "psi_continuum_v2.analysis.check.check_desi_dr2_data"]),
 
-        # New data validation steps
-        ("check_bao_dr12_data",        ["python3", str(analysis / "check_bao_dr12_data.py")]),
-        ("check_desi_dr2_data",        ["python3", str(analysis / "check_desi_dr2_data.py")]),
+        ("sn_test_lcdm_pplus",        ["python3", "-m", "psi_continuum_v2.analysis.tests.sn_test_lcdm_pplus_simple"]),
+        ("sn_test_psicdm_pplus",      ["python3", "-m", "psi_continuum_v2.analysis.tests.sn_test_psicdm_pplus"]),
 
-        # SN
-        ("sn_test_lcdm_pplus",         ["python3", str(analysis / "sn_test_lcdm_pplus_simple.py")]),
-        ("sn_test_psicdm_pplus",       ["python3", str(analysis / "sn_test_psicdm_pplus.py")]),
+        ("hz_test_psicdm",            ["python3", "-m", "psi_continuum_v2.analysis.tests.hz_test_psicdm"]),
+        ("bao_desi_test",             ["python3", "-m", "psi_continuum_v2.analysis.tests.bao_desi_dr2_test"]),
 
-        # H(z)
-        ("hz_test_psicdm",             ["python3", str(analysis / "hz_test_psicdm.py")]),
+        ("joint_fit_psicdm",          ["python3", "-m", "psi_continuum_v2.analysis.pipeline.joint_fit_psicdm"]),
+        ("scan_eps_psicdm",           ["python3", "-m", "psi_continuum_v2.analysis.scans.scan_eps_psicdm"]),
+        ("eps_best_joint_test",       ["python3", "-m", "psi_continuum_v2.analysis.tests.eps_best_joint_test"]),
 
-        # BAO
-        ("bao_desi_test",              ["python3", str(analysis / "bao_desi_dr2_test.py")]),
-
-        # Combined likelihood
-        ("joint_fit_psicdm",           ["python3", str(analysis / "joint_fit_psicdm.py")]),
-        ("scan_eps_psicdm",            ["python3", str(analysis / "scan_eps_psicdm.py")]),
-        ("eps_best_joint_test",        ["python3", str(analysis / "eps_best_joint_test.py")]),
-
-        # Final publication-ready figures
-        ("make_publication_plots", ["python3", str(analysis / "make_publication_plots.py")]),
+        ("make_publication_plots",    ["python3", "-m", "psi_continuum_v2.analysis.plots.make_publication_plots"]),
     ]
 
     for name, cmd in steps:
@@ -131,7 +132,8 @@ def main():
         "\n=========================================\n"
         "     ALL ANALYSIS SCRIPTS COMPLETED       \n"
         "=========================================\n"
-        f"Logs saved in: {log_dir}\n"
+        f"Results are stored in: {results_root}\n"
+        f"Logs are in: {log_dir}\n"
     )
 
     print(summary)

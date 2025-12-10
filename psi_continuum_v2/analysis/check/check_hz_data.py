@@ -1,4 +1,4 @@
-# analysis/check_hz_data.py
+# analysis/check/check_hz_data.py
 
 """
 Quick H(z) compilation check:
@@ -8,27 +8,28 @@ Quick H(z) compilation check:
 - diagnostic plots
 """
 
-from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
-plt.style.use('psi_continuum_v2/analysis/styles/psi_style.mplstyle')
 
+from psi_continuum_v2.utils import get_data_path, get_results_path
 from psi_continuum_v2.cosmology.data_loaders import (
     load_hz_compilation,
     validate_hz_dataset,
 )
 
 
-def main():
-    # Project directory (two levels above this file)
-    project_root = Path(__file__).resolve().parents[2]
+def main() -> None:
+    # --- Locate data and results directories ---
 
-    data_dir = project_root / "data" / "hz"
-    results_dir = project_root / "results" / "figures" / "data_checks"
+    # H(z) compilation lives under data/hz/
+    hz_dir = get_data_path("hz", must_exist=True)
+
+    # results/figures/data_checks/ next to data/
+    results_dir = get_results_path("figures", "data_checks")
     results_dir.mkdir(parents=True, exist_ok=True)
 
-    # Load and validate dataset
-    hzdata = load_hz_compilation(data_dir)
+    # --- Load and validate dataset ---
+    hzdata = load_hz_compilation(hz_dir)
     validate_hz_dataset(hzdata)
 
     z = hzdata["z"]

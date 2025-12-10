@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "psi-continuum-v2"
-version = "0.2.1"
+version = "0.2.2"
 description = "Psi-Continuum v2: cosmological framework and joint likelihood analysis for the Psi-CDM model."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -49,25 +49,27 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://github.com/dmitrylife/psi-continuum-v2"
-Documentation = "https://psi-continuum.org"
+Documentation = "https://psi-continuum.org/docs/index.html"
 Source   = "https://github.com/dmitrylife/psi-continuum-v2"
 Issues   = "https://github.com/dmitrylife/psi-continuum-v2/issues"
 
-# -------------------------------
-#  setuptools configuration
-# -------------------------------
 [tool.setuptools]
 include-package-data = true
 
 [tool.setuptools.packages.find]
 include = ["psi_continuum_v2*"]
 
-# Include non-Python data (csv, txt, dat, cov, etc.)
 [tool.setuptools.package-data]
-"psi_continuum_v2" = ["**/*.txt", "**/*.csv", "**/*.dat", "**/*.cov"]
+psi_continuum_v2 = [
+    "analysis/styles/*.mplstyle"
+]
 
 [project.scripts]
+psi-cli = "psi_continuum_v2.cli.menu:menu"
+psi-run-all = "psi_continuum_v2.cli.run_all:main"
 psi-check-data = "psi_continuum_v2.check_data:main"
+psi-download-data = "psi_continuum_v2.data_manager.download:main"
+psi-make-plots-pub = "psi_continuum_v2.analysis.plots.make_publication_plots:main"
 
 [project.optional-dependencies]
 test = ["pytest"]

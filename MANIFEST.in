@@ -1,3 +1,22 @@
 include README.md
 include LICENSE
 include pyproject.toml
+
+# Package data
+recursive-include psi_continuum_v2 *.mplstyle
+recursive-include psi_continuum_v2 *.py
+
+# Exclude unnecessary folders
+exclude data/*
+recursive-exclude data *
+
+exclude results/*
+recursive-exclude results *
+
+exclude examples/*
+recursive-exclude examples *
+
+# Global excludes
+global-exclude *.pyc
+global-exclude __pycache__/*
+global-exclude *.log

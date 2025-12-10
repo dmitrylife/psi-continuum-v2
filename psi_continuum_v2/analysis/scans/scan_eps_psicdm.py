@@ -1,4 +1,4 @@
-# analysis/scan_eps_psicdm.py
+# analysis/scans/scan_eps_psicdm.py
 
 """
 Scan of the ΨCDM epsilon_0 parameter:
@@ -8,28 +8,23 @@ We evaluate:
     χ²_H(z)(ε0)
     χ²_BAO_SDSS(ε0)
     χ²_DESI_DR2(ε0)
-    χ²_total(ε0) = sum of all components
+    χ²_total(ε0)
 
-and compute:
-    Δχ²(ε0) = χ²_total(ε0) − χ²_LCDM_reference
+and compute Δχ²(ε0) relative to ΛCDM.
 
-This script produces the first combined constraint on ΨCDM
-using SN + H(z) + SDSS DR12 BAO + DESI DR2 BAO.
+Outputs:
+    results/tables/scan/eps_scan_psicdm.txt
+    results/figures/scan/eps_scan_total.png
 """
 
-from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
-plt.style.use('psi_continuum_v2/analysis/styles/psi_style.mplstyle')
 
-# -------------------- Data --------------------
-
+from psi_continuum_v2.utils import get_data_path, get_results_path
 from psi_continuum_v2.cosmology.data_loaders.pantheonplus_loader import load_pantheonplus_hf
 from psi_continuum_v2.cosmology.data_loaders.hz_loader import load_hz_compilation
 from psi_continuum_v2.cosmology.data_loaders.bao_loader import load_bao_dr12
 from psi_continuum_v2.cosmology.data_loaders.desi_loader import load_desi_dr2
-
-# -------------------- Cosmology --------------------
 
 from psi_continuum_v2.cosmology.background.lcdm import (
     H_lcdm, dL_lcdm, mu_from_dL, DM_lcdm, DH_lcdm
@@ -44,7 +39,7 @@ from psi_continuum_v2.cosmology.models.psicdm_params import PsiCDMParams
 
 
 # ===============================================================
-#                       LIKELIHOOD TERMS
+# Likelihood terms
 # ===============================================================
 
 def chi2_sn(sn, model, lcdm_params=None, psicdm_params=None):
@@ -116,12 +111,11 @@ def chi2_desi(desi, model, lcdm_params=None, psicdm_params=None):
             elif lab.startswith("DV"):
                 DMv = DM_lcdm(zi, lcdm_params)
                 DHv = DH_lcdm(zi, lcdm_params)
-                DVv = (DMv * DMv * zi * DHv)**(1/3)
-                preds.append(DVv / rd)
+                preds.append(((DMv * DMv * zi * DHv)**(1/3)) / rd)
             else:
                 raise ValueError(lab)
 
-        else:  # PsiCDM
+        else:
             rd = psicdm_params.rd
             if lab.startswith("DM"):
                 preds.append(DM_psicdm(zi, psicdm_params) / rd)
@@ -130,8 +124,7 @@ def chi2_desi(desi, model, lcdm_params=None, psicdm_params=None):
             elif lab.startswith("DV"):
                 DMv = DM_psicdm(zi, psicdm_params)
                 DHv = DH_psicdm(zi, psicdm_params)
-                DVv = (DMv * DMv * zi * DHv)**(1/3)
-                preds.append(DVv / rd)
+                preds.append(((DMv * DMv * zi * DHv)**(1/3)) / rd)
             else:
                 raise ValueError(lab)
 
@@ -142,17 +135,16 @@ def chi2_desi(desi, model, lcdm_params=None, psicdm_params=None):
 
 
 # ===============================================================
-#                           MAIN SCAN
+# Main scan
 # ===============================================================
 
 def main():
-    root = Path(__file__).resolve().parents[2]
 
     # --- Load datasets ---
-    sn = load_pantheonplus_hf(root / "data" / "pantheon_plus")
-    hz = load_hz_compilation(root / "data" / "hz")
-    bao = load_bao_dr12(root / "data" / "bao")
-    desi = load_desi_dr2(root / "data" / "desi" / "dr2")
+    sn = load_pantheonplus_hf(get_data_path("pantheon_plus"))
+    hz = load_hz_compilation(get_data_path("hz"))
+    bao = load_bao_dr12(get_data_path("bao"))
+    desi = load_desi_dr2(get_data_path("desi", "dr2"))
 
     # --- Reference ΛCDM ---
     lcdm = LCDMParams(H0=70.0, Om0=0.3)
@@ -166,9 +158,8 @@ def main():
 
     print(f"ΛCDM reference χ² = {chi2_ref:.3f}")
 
-    # --- Epsilon scan grid ---
+    # --- Epsilon grid ---
     eps_grid = np.linspace(-0.10, +0.10, 201)
-
     chi2_total = np.zeros_like(eps_grid)
 
     print("Scanning eps0...")
@@ -195,12 +186,10 @@ def main():
     print(f"Δχ²_best  = {chi2_best - chi2_ref:+.3f}")
 
     # ===============================================================
-    #                     Save table to /tables/scan/
+    # Save table
     # ===============================================================
-
-    tab_dir = root / "results" / "tables" / "scan"
+    tab_dir = get_results_path("tables", "scan")
     tab_dir.mkdir(parents=True, exist_ok=True)
-
     out_table = tab_dir / "eps_scan_psicdm.txt"
 
     with open(out_table, "w") as f:
@@ -213,15 +202,13 @@ def main():
         f.write(f"chi2_best = {chi2_best:.8f}\n")
         f.write(f"delta_best = {chi2_best - chi2_ref:.8f}\n")
 
-    print(f"Table saved to: {out_table}")
+    print("Table saved to:", out_table)
 
     # ===============================================================
-    #                         Save Δχ² plot
+    # Save Δχ² plot
     # ===============================================================
-
-    fig_dir = root / "results" / "figures" / "scan"
+    fig_dir = get_results_path("figures", "scan")
     fig_dir.mkdir(parents=True, exist_ok=True)
-
     fig_file = fig_dir / "eps_scan_total.png"
 
     plt.figure(figsize=(7, 5))
@@ -237,7 +224,7 @@ def main():
     plt.savefig(fig_file, dpi=200)
     plt.close()
 
-    print(f"Plot saved to: {fig_file}")
+    print("Plot saved:", fig_file)
 
 
 if __name__ == "__main__":

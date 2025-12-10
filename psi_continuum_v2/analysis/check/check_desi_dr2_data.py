@@ -1,4 +1,4 @@
-# analysis/check_desi_dr2_data.py
+# analysis/check/check_desi_dr2_data.py
 
 """
 Check DESI DR2 Gaussian BAO dataset:
@@ -8,15 +8,14 @@ Check DESI DR2 Gaussian BAO dataset:
  - diagnostic plots DM/rs, DH/rs, DV/rs
 """
 
-from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
-plt.style.use('psi_continuum_v2/analysis/styles/psi_style.mplstyle')
 
+from psi_continuum_v2.utils import get_data_path, get_results_path
 from psi_continuum_v2.cosmology.data_loaders.desi_loader import load_desi_dr2
 
 
-def validate_covariance(name: str, cov: np.ndarray):
+def validate_covariance(name: str, cov: np.ndarray) -> None:
     """Ensure covariance is symmetric and positive definite."""
     if not np.isfinite(cov).all():
         raise ValueError(f"{name}: covariance contains NaN or Inf values.")
@@ -24,9 +23,11 @@ def validate_covariance(name: str, cov: np.ndarray):
     if cov.shape[0] != cov.shape[1]:
         raise ValueError(f"{name}: covariance must be square, got {cov.shape}")
 
+    # Symmetry check
     if not np.allclose(cov, cov.T, rtol=1e-10, atol=1e-12):
         raise ValueError(f"{name}: covariance is not symmetric.")
 
+    # Positive-definite check via Cholesky
     try:
         np.linalg.cholesky(cov)
     except np.linalg.LinAlgError:
@@ -35,22 +36,27 @@ def validate_covariance(name: str, cov: np.ndarray):
     print(f"{name}: covariance OK (symmetric, pos-def).")
 
 
-def main():
-    project_root = Path(__file__).resolve().parents[2]
-    data_dir = project_root / "data" / "desi" / "dr2"
-    out_dir = project_root / "results" / "figures" / "data_checks"
+def main() -> None:
+    # --- Locate datasets and results directory ---
+
+    # DESI DR2 Gaussian BAO lives under data/desi/dr2/
+    desi_dir = get_data_path("desi", "dr2", must_exist=True)
+
+    # results/figures/data_checks/ lives next to data/
+    out_dir = get_results_path("figures", "data_checks")
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    desi = load_desi_dr2(data_dir)
+    # --- Load DESI DR2 data using the existing loader ---
+    desi = load_desi_dr2(desi_dir)
 
     z = desi["z"]
     labels = desi["labels"]
     vec = desi["vec"]
     cov = desi["cov"]
 
-    N = len(z)
+    n_points = len(z)
     print("=== DESI DR2 BAO dataset check ===")
-    print(f"N points        = {N}")
+    print(f"N points        = {n_points}")
     print(f"Labels          = {labels}")
     print(f"z range         = [{z.min():.3f}, {z.max():.3f}]")
     print(f"Vector length   = {len(vec)}")

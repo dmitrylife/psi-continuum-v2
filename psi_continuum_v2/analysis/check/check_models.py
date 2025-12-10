@@ -1,4 +1,4 @@
-# analysis/check_models.py
+# analysis/check/check_models.py
 
 """
 Basic sanity checks for ΛCDM and ΨCDM background models.
@@ -21,15 +21,14 @@ Output directory:
     results/figures/model_checks/
 """
 
-from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
-plt.style.use('psi_continuum_v2/analysis/styles/psi_style.mplstyle')
 
 from psi_continuum_v2.cosmology.background.lcdm import E_lcdm, H_lcdm, dL_lcdm
 from psi_continuum_v2.cosmology.background.psicdm import E_psicdm, H_psicdm, dL_psicdm
 from psi_continuum_v2.cosmology.models.lcdm_params import LCDMParams
 from psi_continuum_v2.cosmology.models.psicdm_params import PsiCDMParams
+from psi_continuum_v2.utils.paths import get_results_path
 
 
 # ======================================================================
@@ -38,8 +37,7 @@ from psi_continuum_v2.cosmology.models.psicdm_params import PsiCDMParams
 
 def check_monotonic_increasing(x: np.ndarray, y: np.ndarray, name: str) -> None:
     """
-    Verify that y(x) is strictly increasing (or non-decreasing with tolerance).
-    Raises ValueError if violated.
+    Verify that y(x) is strictly increasing (allowing small numerical noise).
     """
     x = np.asarray(x)
     y = np.asarray(y)
@@ -50,7 +48,7 @@ def check_monotonic_increasing(x: np.ndarray, y: np.ndarray, name: str) -> None:
     if np.any(dx <= 0):
         raise ValueError(f"{name}: x-grid must be strictly increasing.")
 
-    eps = 1e-10  # allow tiny floating noise
+    eps = 1e-10
     if np.any(dy < -eps):
         idx = np.where(dy < -eps)[0][0]
         raise ValueError(
@@ -66,7 +64,6 @@ def check_lcdm_basic(params: LCDMParams) -> None:
     """
     Perform core consistency checks for ΛCDM.
     """
-    # E(0) and H(0)
     E0 = float(E_lcdm([0.0], params)[0])
     H0_val = float(H_lcdm([0.0], params)[0])
 
@@ -76,7 +73,7 @@ def check_lcdm_basic(params: LCDMParams) -> None:
     if not np.allclose(H0_val, params.H0, rtol=1e-10):
         raise ValueError(f"LCDM: Expected H(0)=H0, got {H0_val}, H0={params.H0}")
 
-    # d_L(z)
+    # Check monotonicity of d_L(z)
     z_grid = np.linspace(0.0, 2.5, 400)
     dL = dL_lcdm(z_grid, params)
 
@@ -133,7 +130,7 @@ def check_psicdm_limit_to_lcdm(params_lcdm: LCDMParams) -> None:
 # Plot generators
 # ======================================================================
 
-def make_lcdm_plots(params: LCDMParams, outdir: Path) -> None:
+def make_lcdm_plots(params: LCDMParams, outdir) -> None:
     outdir.mkdir(parents=True, exist_ok=True)
 
     z = np.linspace(0.0, 2.5, 400)
@@ -173,13 +170,12 @@ def make_lcdm_plots(params: LCDMParams, outdir: Path) -> None:
     plt.close()
 
 
-def make_psicdm_plots(params_lcdm: LCDMParams, outdir: Path) -> None:
+def make_psicdm_plots(params_lcdm: LCDMParams, outdir) -> None:
     outdir.mkdir(parents=True, exist_ok=True)
 
     z = np.linspace(0.0, 2.5, 400)
     E_l = E_lcdm(z, params_lcdm)
 
-    # E(z) for a range of eps0
     eps_values = [-0.1, -0.05, 0.0, 0.05, 0.1]
 
     plt.figure(figsize=(6, 4))
@@ -201,7 +197,7 @@ def make_psicdm_plots(params_lcdm: LCDMParams, outdir: Path) -> None:
     plt.savefig(outdir / "psicdm_eps_scan_Ez.png", dpi=200)
     plt.close()
 
-    # ΨCDM vs ΛCDM for a small deviation
+    # Comparison with LCDM
     eps_test = 0.05
     p_test = PsiCDMParams(
         H0=params_lcdm.H0,
@@ -227,10 +223,9 @@ def make_psicdm_plots(params_lcdm: LCDMParams, outdir: Path) -> None:
 # MAIN
 # ======================================================================
 
-def main():
-    project_root = Path(__file__).resolve().parents[2]
-    outdir = project_root / "results" / "figures" / "model_checks"
-    outdir.mkdir(parents=True, exist_ok=True)
+def main() -> None:
+    # results/figures/model_checks/ next to data/
+    outdir = get_results_path("figures", "model_checks")
 
     lcdm = LCDMParams(H0=70.0, Om0=0.3)
 

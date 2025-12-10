@@ -1,60 +1,36 @@
-# -------------------------
-# Python cache / artifacts
-# -------------------------
+# --- Python ---
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-*.so
+*.pkl
 
-# -------------------------
-# Virtual environments
-# -------------------------
-sci_venv/
-venv/
-.venv/
-
-# -------------------------
-# Build & packaging
-# -------------------------
+# --- Build artifacts ---
 build/
 dist/
 *.egg-info/
-*.whl
 
-# -------------------------
-# Project output directories
-# (not part of repository)
-# -------------------------
+# --- Virtual environments ---
+venv/
+sci_venv/
+.env/
+.venv/
+
+# --- Results ---
 results/
-data/
 
-# -------------------------
-# Testing
-# -------------------------
-.pytest_cache/
+# --- Logs ---
+*.log
 
-# -------------------------
-# IDE / Editor
-# -------------------------
+# --- Jupyter ---
+*.ipynb_checkpoints/
+
+# --- System / Editor files ---
+.DS_Store
 .idea/
 .vscode/
 *.swp
-*.swo
-*~
-.DS_Store
 
-# -------------------------
-# GitHub
-# -------------------------
-.git/
-
-# -------------------------
-# PyPI
-# -------------------------
+# --- More ---
 .pypirc
-
-# -------------------------
-# More
-# -------------------------
-Release/
+tree.py
