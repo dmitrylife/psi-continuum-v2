@@ -4,7 +4,7 @@
 **Author:** Dmitry Vasilevich Klimov
 **Status:** Research Prototype (v0.2.2)
 
-📘 **Documentation packages PyPi:** https://psi-continuum.org/docs/v2
+📘 **Documentation (PyPI Package):** https://psi-continuum.org/docs/v2
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)
