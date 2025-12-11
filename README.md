@@ -4,7 +4,7 @@
 **Author:** Dmitry Vasilevich Klimov
 **Status:** Research Prototype (v0.2.2)
 
-📘 **Documentation:** https://psi-continuum.org/docs/v2
+📘 **Documentation packages PyPi:** https://psi-continuum.org/docs/v2
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)
@@ -209,8 +209,7 @@ pip install psi-continuum-v2
 
 This only installs the package code.
 All scientific datasets must be downloaded manually and placed in the local `data/` directory 
-(see the section "Preparing the data/ directory"). 
-Or they can be downloaded from the repository using the `psi-cli` command.
+(see the section "Preparing the data/ directory").
 
 ---
 
@@ -244,7 +243,7 @@ This command creates data/ automatically and fetches all required datasets from 
 
 ---
 
-### Clone the repository
+### Installation from source (clone repository)
 
 ```bash
 git clone https://github.com/dmitrylife/psi-continuum-v2.git
@@ -265,12 +264,6 @@ source sci_venv/bin/activate
 
 ```bash
 pip install -e .
-```
-
-### Or Interactive CLI
-
-```bash
-psi-cli
 ```
 
 ---
@@ -299,7 +292,7 @@ data/
 ```
 
 You may download these datasets from their original public sources 
-or download using the `psi-download-data` command:
+or download using the (`psi-download-data`) command:
 
  - Pantheon+ HF supernova sample
  - Cosmic chronometer H(z) compilation
@@ -327,14 +320,14 @@ SDSS DR12 BAO     OK
 DESI DR2 BAO      MISSING   → please place DESI DR2 Gaussian files into ./data/desi/dr2/
 ```
 
-When installed via pip, the tool looks for the data/ directory in your current working folder.
+When installed via pip, the tool looks for the `data/` directory in your current working folder.
 
 If some files are missing, the analysis scripts will raise a clear
 FileNotFoundError with instructions on where to place the data.
 
 ---
 
-## Examples
+## Examples (clone repository)
 
 Minimal demonstration scripts live in:
 
@@ -409,20 +402,19 @@ results/
 │       ├── pantheonplus_hf_chi2_eps_scan.png
 │       ├── pantheonplus_hf_hubble_diagram.png
 │       └── pantheonplus_hf_residuals.png
-├── tables
-│   ├── bao
-│   │   └── desi_dr2_chi2.txt
-│   ├── hz
-│   │   └── hz_psicdm_chi2.txt
-│   ├── joint
-│   │   ├── eps_best_joint.txt
-│   │   └── joint_fit_summary.txt
-│   ├── scan
-│   │   └── eps_scan_psicdm.txt
-│   └── sn
-│       ├── chi2_eps_scan.txt
-└──     └── pantheonplus_hf_chi2_lcdm.txt
-
+└── tables
+    ├── bao
+    │   └── desi_dr2_chi2.txt
+    ├── hz
+    │   └── hz_psicdm_chi2.txt
+    ├── joint
+    │   ├── eps_best_joint.txt
+    │   └── joint_fit_summary.txt
+    ├── scan
+    │   └── eps_scan_psicdm.txt
+    └── sn
+        ├── chi2_eps_scan.txt
+        └── pantheonplus_hf_chi2_lcdm.txt
 ```
 
 ---
