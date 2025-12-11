@@ -243,31 +243,6 @@ This command creates data/ automatically and fetches all required datasets from 
 
 ---
 
-### Installation from source (clone repository)
-
-```bash
-git clone https://github.com/dmitrylife/psi-continuum-v2.git
-```
-
-```bash
-cd psi-continuum-v2
-```
-
-### Create virtual environment
-
-```bash
-python3 -m venv sci_venv
-source sci_venv/bin/activate
-```
-
-### (Optional) Install the package as editable
-
-```bash
-pip install -e .
-```
-
----
-
 ### Preparing the `data/` Directory
 
 The `data/` directory is intentionally **excluded** from the PyPI package.  
@@ -324,6 +299,31 @@ When installed via pip, the tool looks for the `data/` directory in your current
 
 If some files are missing, the analysis scripts will raise a clear
 FileNotFoundError with instructions on where to place the data.
+
+---
+
+### Installation from source (clone repository)
+
+```bash
+git clone https://github.com/dmitrylife/psi-continuum-v2.git
+```
+
+```bash
+cd psi-continuum-v2
+```
+
+### Create virtual environment
+
+```bash
+python3 -m venv sci_venv
+source sci_venv/bin/activate
+```
+
+### (Optional) Install the package as editable
+
+```bash
+pip install -e .
+```
 
 ---
 
