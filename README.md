@@ -327,7 +327,9 @@ FileNotFoundError with instructions on where to place the data.
 
 ---
 
-## Examples (clone repository)
+## Examples
+
+Данная `examples/` директория исключена из пакета PyPI
 
 Minimal demonstration scripts live in:
 
