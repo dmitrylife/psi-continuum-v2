@@ -1,19 +1,18 @@
-include README.md
+# Core metadata
+include README_PYPI.md
 include LICENSE
 include pyproject.toml
+include CHANGELOG.md
+include CITATION.cff
+include CONTRIBUTING.md
 
-# Package data
-recursive-include psi_continuum_v2 *.mplstyle
+# Package source and assets
 recursive-include psi_continuum_v2 *.py
+recursive-include psi_continuum_v2 *.mplstyle
 
-# Exclude unnecessary folders
-exclude data/*
+# Exclude large or non-package directories
 recursive-exclude data *
-
-exclude results/*
 recursive-exclude results *
-
-exclude examples/*
 recursive-exclude examples *
 
 # Global excludes

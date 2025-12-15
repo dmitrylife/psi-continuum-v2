@@ -1,6 +1,8 @@
+#!/usr/bin/env python3
+
 from psi_continuum_v2.utils.paths import (
     data_root_exists,
-    get_data_root,     # вызываем ТОЛЬКО когда нужно
+    get_data_root,
 )
 import subprocess
 import webbrowser

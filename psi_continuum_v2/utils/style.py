@@ -1,4 +1,4 @@
-# psi_continuum_v2/utils/style.py
+# utils/style.py
 
 from pathlib import Path
 from importlib import resources
@@ -31,4 +31,3 @@ def use_psi_style() -> None:
     """
     style_path = get_psi_style_path()
     plt.style.use(style_path)
-

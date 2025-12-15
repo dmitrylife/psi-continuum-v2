@@ -1,3 +1,5 @@
+# data_manager/sources.py
+
 """
 Defines URLs for downloading required datasets for Psi-Continuum v2.
 """
@@ -30,7 +32,7 @@ GITHUB_SOURCES = {
 }
 
 # --------------------------------------------------------------
-# Official sources (future use, currently minimal / placeholder)
+# Official sources (not implemented)
 # --------------------------------------------------------------
 OFFICIAL_SOURCES = {
     "pantheon_plus": {},

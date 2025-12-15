@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """
 Example: compute BAO distance measures for ΛCDM and ΨCDM.
 """

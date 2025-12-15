@@ -1,4 +1,4 @@
-# analysis/sn_test_lcdm_pplus_simple.py
+# analysis/tests/sn_test_lcdm_pplus_simple.py
 
 """
 SN test for flat ΛCDM using Pantheon+SH0ES HF data.

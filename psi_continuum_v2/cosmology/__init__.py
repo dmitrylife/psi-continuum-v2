@@ -1,4 +1,4 @@
-# psi_continuum_v2/cosmology/__init__.py
+# cosmology/__init__.py
 
 """
 Cosmology-level public API for Psi-Continuum.
@@ -13,4 +13,3 @@ from psi_continuum_v2.cosmology.constants import C_LIGHT
 __all__ = [
     "C_LIGHT",
 ]
-

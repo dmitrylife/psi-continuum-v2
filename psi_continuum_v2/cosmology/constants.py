@@ -1,4 +1,4 @@
-# psi_continuum_v2/cosmology/constants.py
+# cosmology/constants.py
 
 """
 Common physical constants used across the Psi-Continuum package.

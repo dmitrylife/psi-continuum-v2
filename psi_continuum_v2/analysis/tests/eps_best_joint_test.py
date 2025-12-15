@@ -1,4 +1,4 @@
-# analysis/eps_best_joint_test.py
+# analysis/tests/eps_best_joint_test.py
 
 """
 Evaluate the ΨCDM best-fit obtained from the full epsilon scan.

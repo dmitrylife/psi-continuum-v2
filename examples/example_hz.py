@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """
 Example: compute H(z) for ΛCDM and ΨCDM.
 """

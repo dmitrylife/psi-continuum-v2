@@ -6,11 +6,12 @@ type: software
 authors:
   - family-names: Klimov
     given-names: Dmitry V.
+    orcid: https://orcid.org/0009-0009-3305-7592
 
 repository-code: "https://github.com/dmitrylife/psi-continuum-v2"
 
-doi: 10.5281/zenodo.17850493
-date-released: "2025-12-08"
+doi: 10.5281/zenodo.17928837
+date-released: "2025-12-14"
 
 abstract: >
   Psi-Continuum v2 provides a reproducible scientific framework for testing
@@ -28,7 +29,7 @@ keywords:
   - dark energy
 
 license: MIT
-version: "0.2.0"
+version: "0.2.3"
 
 preferred-citation:
   type: software
@@ -36,8 +37,9 @@ preferred-citation:
   authors:
     - family-names: Klimov
       given-names: Dmitry V.
+      orcid: https://orcid.org/0009-0009-3305-7592
   year: 2025
-  version: "0.2.0"
-  doi: 10.5281/zenodo.17850493
+  version: "0.2.3"
+  doi: 10.5281/zenodo.17928837
   repository-code: "https://github.com/dmitrylife/psi-continuum-v2"
-  url: "https://psi-continuum.org"
+  url: "https://psi-continuum.org/docs/v2"

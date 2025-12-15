@@ -1,4 +1,4 @@
-# psi_continuum_v2/utils/__init__.py
+# utils/__init__.py
 
 from .paths import (
     get_data_root,
@@ -20,4 +20,3 @@ __all__ = [
     "get_psi_style_path",
     "use_psi_style",
 ]
-

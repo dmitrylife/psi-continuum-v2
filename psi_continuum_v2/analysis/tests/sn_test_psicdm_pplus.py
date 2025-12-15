@@ -1,4 +1,4 @@
-# analysis/sn_test_psicdm_pplus.py
+# analysis/tests/sn_test_psicdm_pplus.py
 
 """
 ΨCDM test using the Pantheon+SH0ES HF sample.

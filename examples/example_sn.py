@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """
 Example: compute SN distance moduli for ΛCDM and ΨCDM.
 """

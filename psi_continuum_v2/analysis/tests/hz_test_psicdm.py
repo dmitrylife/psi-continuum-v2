@@ -1,4 +1,4 @@
-# analysis/hz_test_psicdm.py
+# analysis/tests/hz_test_psicdm.py
 
 """
 ΨCDM vs ΛCDM test using the compiled H(z) dataset.

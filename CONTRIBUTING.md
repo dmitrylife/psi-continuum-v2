@@ -1,138 +1,41 @@
 # Contributing to Psi-Continuum v2
 
-Thank you for your interest in contributing!
+Thank you for your interest in the Psi-Continuum project.
 
-Psi-Continuum v2 is a scientific Python package designed for transparent and 
-reproducible cosmological analysis.  
-We welcome contributions that improve code quality, scientific correctness, 
-documentation, and dataset support.
+## Project Status
 
----
+Psi-Continuum v2 represents the **final archived research release**
+associated with the published Psi-Continuum v2 preprint and software archive.
 
-## 1. Repository Structure
+Active development of this repository is **complete**.
+No further code contributions, feature extensions, or dataset additions
+are expected for this version.
 
-The main package code lives in:
-
-```text
-psi_continuum_v2/
-├── cosmology/
-└── analysis/
-```
-
-All executable analysis scripts are located under:
-
-```text
-psi_continuum_v2/analysis/
-```
+This repository is preserved to ensure long-term reproducibility,
+transparency, and citation of the published results.
 
 ---
 
-## 2. Reporting Issues
+## Questions and Scientific Discussion
 
-When opening an issue on GitHub, please include:
+If you have questions related to:
 
-- a clear description of the problem,
-- steps to reproduce the issue,
-- expected vs. observed behavior,
-- dataset(s) used,
-- Python version and operating system.
+- the published results,
+- numerical implementation,
+- reproducibility of the figures,
+- interpretation of the Psi-Continuum framework,
 
-This helps maintain reproducibility and ensures fast debugging.
-
----
-
-## 3. Submitting Pull Requests (PR)
-
-1. **Fork** the repository.
-2. Create a new branch:
-
-```bash
-git checkout -b feature/my-improvement
-```
-
-3. Make changes following the project style guidelines (see below).
-
-4. Ensure all χ² values and plots remain numerically stable.
-
-5. Run the full pipeline to verify integrity:
-
-```bash
-python run_all.py
-```
-
-6. Ensure all unit tests pass:
-
- - `pytest -q`
-
-7. Submit your pull request to the **main** branch with a clear description of the changes.
-
----
-
-## 4. Coding Style Guidelines
-
- - Follow **PEP8** for all Python files.
-
- - Use **type hints** wherever possible (-> float, -> np.ndarray, etc.).
-
- - Prefer **pure functions** for likelihoods and model evaluations.
-
- - Avoid hard-coded file paths — always use:
-
-```python
-from pathlib import Path
-Path(__file__).resolve()
-```
-
- - **Use NumPy-style docstrings** for all public functions.
- 
----
-
-## 5. Scientific Reproducibility Requirements
-
-Any new dataset, model, or likelihood **must include**:
-
-- The original data files placed in the `data/` directory.
-- A corresponding loader module under `cosmology/data_loaders/`.
-- Clear documentation of the format and covariance usage.
-- Validation and diagnostic plots.
-- At least one analysis script demonstrating correct usage.
-
-All scientific results should be fully reproducible with:
-
-```bash
-python run_all.py
-```
-
----
-
-## 6. Running Tests
-
-Before submitting a pull request, run the test suite:
-
-```bash
-pytest -q
-```
-If you installed the package via `pip install -e .`, tests should execute without errors.
-
-All new contributions must:
-
- - include tests when appropriate,
-
- - keep existing tests passing,
-
- - avoid breaking the reproducibility pipeline (`run_all.py`).
-
----
-
-## 7. Contact
-
-For scientific discussion, questions, or collaboration inquiries:
+you are welcome to contact the author directly.
 
 **Dmitry V. Klimov**  
 Email: d.klimov.psi@gmail.com
 
-Please use the GitHub issue tracker:
-https://github.com/dmitrylife/psi-continuum-v2/issues
+---
 
-Pull requests:
-https://github.com/dmitrylife/psi-continuum-v2/pulls
+## Future Development
+
+Future developments of the Psi-Continuum framework (e.g. Psi-Continuum v3)
+will be released as **separate repositories and publications**.
+
+Please do not submit pull requests or issues for new features
+to this archived repository.

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# data_manager/download.py
 
 import argparse
 import urllib.request

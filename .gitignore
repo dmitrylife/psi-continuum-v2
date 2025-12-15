@@ -16,8 +16,13 @@ sci_venv/
 .env/
 .venv/
 
-# --- Results ---
+# --- Results (generated, archived separately on Zenodo) ---
 results/
+
+# --- Testing ---
+.pytest_cache/
+.coverage
+htmlcov/
 
 # --- Logs ---
 *.log
@@ -30,7 +35,3 @@ results/
 .idea/
 .vscode/
 *.swp
-
-# --- More ---
-.pypirc
-tree.py

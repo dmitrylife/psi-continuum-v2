@@ -55,4 +55,3 @@ ytick.major.size: 6
 # ---- Misc ----
 axes.formatter.use_mathtext: True
 axes.formatter.limits: -3, 3
-

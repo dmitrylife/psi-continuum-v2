@@ -1,4 +1,4 @@
-# psi_continuum_v2/tests/test_check_data.py
+# tests/test_check_data.py
 
 import subprocess
 import sys

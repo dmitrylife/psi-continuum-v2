@@ -1,4 +1,4 @@
-# psi_continuum_v2/utils/paths.py
+# utils/paths.py
 
 from pathlib import Path
 from typing import List
