@@ -32,7 +32,7 @@ A smooth percent-level correction at low redshift:
 
 - reduces to ΛCDM when ε₀ = 0,
 - preserves all early-Universe observables (CMB, primordial BAO),
-- is interpretable as a macroscopic entropy/dissipation response term.
+- can be interpreted phenomenologically as an effective macroscopic response term.
 
 ---
 
